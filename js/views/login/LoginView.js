@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
 import { Grid, Row, Col, Form, FormGroup, FormControl, Checkbox, Button, Panel, ControlLabel, Alert } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 import LoginMutation from '../../mutations/LoginMutation';
 
@@ -94,6 +95,10 @@ class LoginView extends Component {
                 </Button>
               </Col>
             </FormGroup>
+
+            <Col smOffset={2} sm={10}>
+              <Link to={`/create`}>Sign up link</Link>
+            </Col>
           </Form>
         </Row>
       </Grid>
