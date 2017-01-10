@@ -29,29 +29,32 @@ export function createUser(input) {
 
     let promise = Role.find({ id: user.role }).exec();
 
-    promise.then((roles) => {
+    return promise.then(roles => {
       // add the role to the user before being saved
       user.role = roles[0].title;
       // assign a token to the created user
       let token = createToken(user);
       // save the user object
-      user.save(() => {
-        console.log('Saved User:', user.name.first);
-        return {
-            success: true,
-            message: 'User has been created!',
-            token: token
-        };
-      })
-      .catch(err => {
-        console.log('Error', err);
-        return;
+      return user.save().then(res => {
+        if(res) {
+          return {
+              'success': true,
+              'message': 'User has been created!',
+              'token': token
+          };
+        } else {
+          return { 'status': 500, 'message': 'Duplicate Record' };
+        }
       });
-    }).catch((err) => {
-      return {'status': 403, 'message': err};
+    })
+    .then(res => res)
+    .catch(err => {
+      return new Error(err);
     });
 }
 
 export function signUp(args) {
-  return { signUpInfo: createUser(args) };
+  return createUser(args).then(resp => {
+    return { signUpInfo: resp };
+  });
 }

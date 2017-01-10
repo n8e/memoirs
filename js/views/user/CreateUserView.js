@@ -27,7 +27,8 @@ class CreateUserView extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
-  onSuccess() {
+  onSuccess(res) {
+    console.log('Response at View', res.signUp.signUpInfo);
     this.setState({success: 'block'});
   }
 
@@ -53,7 +54,6 @@ class CreateUserView extends Component {
   }
 
   render() {
-    console.log('Create user view state:', this.state.user);
     return (
       <Grid>
         <Row>

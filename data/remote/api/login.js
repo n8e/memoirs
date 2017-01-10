@@ -46,6 +46,6 @@ export function signIn(input) {
 
 export function login(args) {
   return signIn(args).then(res => {
-    return { userInfo: res }
+    return { userInfo: res };
   });
 }
