@@ -15,37 +15,31 @@ const createToken = (user) => {
 }
 
 export function signIn(input) {
-    let res;
+    let promise = User.find({ username: input.username }).exec();
 
-    let promise = User.findOne({ username: input.username }).exec();
-
-    return promise.then((user) => {
-      if (!user) {
-          throw {'status': 401, 'message': 'User does not exist'};
-      } else if (user) {
-          let validPassword = user.comparePassword(input.password);
-          if (!validPassword) {
-              throw {'status': 401, 'message': 'Invalid Password'};
-          } else {
-              // token
-              delete user.password;
-              let token = createToken(user);
-              return {
-                'loggedIn': true,
-                'userName': user.username,
-                'token': token
-              };
-          }
+    return promise.then(user => {
+      if(user) {
+        let validPassword = user[0].comparePassword(input.password);
+        if (!validPassword) {
+          throw { status:401, message: 'Invalid Password' }
+        } else {
+          // token
+          delete user[0].password;
+          const token = createToken(user[0]);
+          return {
+            userName: user[0].username,
+            loggedIn: true,
+            token: token
+          };
+        }
+      } else {
+        throw { status: 401, message: 'User does not exist' }
       }
-    }).then(resp => {
-      return resp;
     }).catch(err => {
       return new Error(err);
     });
 }
 
 export function login(args) {
-  return signIn(args).then(res => {
-    return { userInfo: res };
-  });
+  return { userInfo: signIn(args) };
 }
