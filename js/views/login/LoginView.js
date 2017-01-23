@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
 import { Grid, Row, Col, Form, FormGroup, FormControl, Checkbox, Button, Panel, ControlLabel, Alert } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 
 import LoginMutation from '../../mutations/LoginMutation';
 
@@ -28,6 +28,8 @@ class LoginView extends Component {
   onSuccess(res) {
     console.log('Response on view', res.login.userInfo);
     this.setState({success: 'block'});
+    // implement transition
+    hashHistory.push('/welcome');
   }
 
   onFailure() {
