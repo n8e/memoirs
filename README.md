@@ -29,6 +29,12 @@ npm run update-schema
 npm start
 ```
 
+## Testing
+Using the `react-addons-test-utils` and `jest` run the tests using:
+```
+npm tests
+```
+
 ## License
 
 Relay Starter Kit is [BSD licensed](./LICENSE). We also provide an additional [patent grant](./PATENTS).
