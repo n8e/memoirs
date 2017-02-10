@@ -28,8 +28,7 @@ class LoginView extends Component {
 		this.renderFormFields = this.renderFormFields.bind(this);
 	}
 
-	onSuccess(res) {
-		console.log('Response on view', res.login.userInfo);
+	onSuccess() {
 		this.setState({success: 'block'});
 		hashHistory.push('/welcome');
 	}
@@ -90,7 +89,7 @@ class LoginView extends Component {
           <Alert bsStyle='success' ref='successAlert' style={{display: this.state.success}}>
             <strong>Login successful!</strong>
           </Alert>
-          <Form horizontal>
+          <div>
 						{this.renderFormFields()}
             <FormGroup>
               <Col smOffset={2} sm={10}>
@@ -109,7 +108,7 @@ class LoginView extends Component {
             <Col smOffset={2} sm={10}>
               <Link to={'/create'}>Sign up link</Link>
             </Col>
-          </Form>
+          </div>
         </Row>
       </Grid>
 		);
