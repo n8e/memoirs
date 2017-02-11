@@ -1,6 +1,5 @@
 import { GraphQLObjectType } from 'graphql';
 // remote methods
-import { getUserInfo } from '../remote/api/getUserInfo';
 // types
 import UserInfoType from './UserInfoType';
 import SignUpInfoType from './SignUpInfoType';
@@ -10,7 +9,7 @@ const UserType = new GraphQLObjectType({
   fields: () => ({
     userInfo: {
       type: UserInfoType,
-      resolve: () => getUserInfo()
+      resolve: () => {return {id: '1'}}
     },
     signUpInfo: {
       type: SignUpInfoType,
