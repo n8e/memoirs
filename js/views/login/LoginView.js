@@ -4,6 +4,7 @@ import { Grid, Row, Col, Form, FormGroup, FormControl, Checkbox, Button, Panel, 
 import { Link, hashHistory } from 'react-router';
 
 import LoginMutation from '../../mutations/LoginMutation';
+import { storeLoginObj } from '../../reusable/auth';
 
 const titleCase = (text) => text.replace(/(^\w|\b\w)/g, (m) => m.toUpperCase());
 
@@ -28,7 +29,12 @@ class LoginView extends Component {
 		this.renderFormFields = this.renderFormFields.bind(this);
 	}
 
-	onSuccess() {
+	onSuccess(res) {
+		storeLoginObj({
+			loggedIn: res.login.userInfo.loggedIn,
+			userName: res.login.userInfo.userName,
+			token: res.login.userInfo.token,
+		});
 		this.setState({success: 'block'});
 		hashHistory.push('/welcome');
 	}
