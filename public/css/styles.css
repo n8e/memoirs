@@ -1,0 +1,18 @@
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f4f4f4;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+.flex-child {
+  align-self: center;
+  background-color: #fff;
+  box-shadow: 5px 5px 5px #888888;
+  width: 75%;
+  height: 100px;
+  margin: 2%;
+}
