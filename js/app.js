@@ -21,7 +21,7 @@ const routes = (
   <Router history={hashHistory} render={applyRouterMiddleware(useRelay)} environment={Relay.Store}>
       <Route path="/create" component={CreateUserView} queries={routeQuery()} />
       <Route path="/login" component={LoginView} queries={routeQuery()} />
-      <Route path="/" component={App} queries={routeQuery()}>
+      <Route path="/" component={App}>
         <IndexRedirect to="/login" />
         <Route path="/welcome" component={WelcomeView} queries={routeQuery()} />
       </Route>
