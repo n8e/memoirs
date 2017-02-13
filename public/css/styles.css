@@ -16,3 +16,13 @@
   height: 100px;
   margin: 2%;
 }
+.floating-right-nav-item {
+  float: right;
+}
+.panel-mobile {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+.page-body {
+  color: #fff;
+}
