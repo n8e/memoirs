@@ -84,11 +84,11 @@ class LoginView extends Component {
 		return (
       <Grid>
         <Row>
-          <Panel>
+          <Panel className="panel-mobile">
             <h2>Login</h2>
           </Panel>
         </Row>
-        <Row>
+        <Row className="page-body">
           <Alert bsStyle='danger' ref='failAlert' style={{display: this.state.fail}}>
             <strong>Login failure!</strong> Please try again.
           </Alert>

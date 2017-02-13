@@ -78,11 +78,11 @@ class CreateUserView extends Component {
 		return (
       <Grid>
         <Row>
-          <Panel>
+          <Panel className="panel-mobile">
             <h2>Sign up</h2>
           </Panel>
         </Row>
-        <Row>
+        <Row className="page-body">
           <Alert bsStyle="danger" ref="failAlert" style={{display: this.state.fail}}>
             <strong>Sign up failure!</strong> Please try again.
           </Alert>
