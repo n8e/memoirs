@@ -10,6 +10,7 @@ import App from './views/container/App';
 import LoginView from './views/login/LoginView';
 import CreateUserView from './views/user/CreateUserView';
 import WelcomeView from './views/welcome/WelcomeView';
+import CreateMemoir from './views/memoir/CreateMemoir';
 
 export function routeQuery() {
   return {
@@ -24,6 +25,7 @@ const routes = (
       <Route path="/" component={App}>
         <IndexRedirect to="/login" />
         <Route path="/welcome" component={WelcomeView} queries={routeQuery()} />
+        <Route path="/memoir" component={CreateMemoir} queries={routeQuery()} />
       </Route>
   </Router>
 )
