@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import { Link, hashHistory } from 'react-router';
 
 import { clearLoginObj } from '../../reusable/auth';
 
@@ -14,6 +15,7 @@ class Navigator extends Component {
 			toggled: null,
 		};
 
+		this.goToMemoir = this.goToMemoir.bind(this);
 		this.doLogout = this.doLogout.bind(this);
 		this.hamburgerCross = this.hamburgerCross.bind(this);
 	}
@@ -30,12 +32,16 @@ class Navigator extends Component {
 		}
 	}
 
+	goToMemoir() {
+		hashHistory.push('/memoir');
+		this.setState({ isClosed: true, showOverlay: true, toggled: 'toggled' });
+	}
+
 	doLogout() {
 		clearLoginObj();
 	}
 
 	render() {
-		console.log('NAV state', this.state);
 		return (
 			<div>
 				{ (this.state.widthSize >= 768) ?
@@ -49,7 +55,7 @@ class Navigator extends Component {
 						<Nav className="floating-right-nav-item">
 							<NavItem eventKey={1} href="#">Memoirs</NavItem>
 							<NavDropdown eventKey={3} title={this.props.userInfo.name} id="basic-nav-dropdown">
-								<MenuItem eventKey={3.3}>Create Memoir</MenuItem>
+								<MenuItem href="#/memoir" onClick={this.goToMemoir}>Create Memoir</MenuItem>
 								<MenuItem divider />
 								<MenuItem href="#/login" onClick={this.doLogout}>Logout</MenuItem>
 							</NavDropdown>
@@ -61,13 +67,16 @@ class Navigator extends Component {
 							<nav className="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
 								<ul className="nav sidebar-nav">
 									<li className="sidebar-brand">
-										<a href="#">Memoirs</a>
+										<Link to={'/welcome'}>Memoirs</Link>
 									</li>
 									<li>
-										<a href="#"><i className="fa fa-fw fa-home"></i> Home</a>
+										<Link to={'/welcome'}><i className="fa fa-fw fa-home"></i> Home</Link>
 									</li>
 									<li>
-										<a href="#/login"><i className="fa fa-fw fa-sign-out"></i> Logout</a>
+										<Link to={'/memoir'}><i className="fa fa-fw fa-file"></i> Create Memoir</Link>
+									</li>
+									<li>
+										<Link to={'/login'} onClick={this.doLogout}><i className="fa fa-fw fa-sign-out"></i> Logout</Link>
 									</li>
 								</ul>
 							</nav>
