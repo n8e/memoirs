@@ -3,6 +3,7 @@ import { GraphQLObjectType } from 'graphql';
 // types
 import UserInfoType from './UserInfoType';
 import SignUpInfoType from './SignUpInfoType';
+import MemoirType from './MemoirType';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -14,6 +15,10 @@ const UserType = new GraphQLObjectType({
     signUpInfo: {
       type: SignUpInfoType,
       resolve: () => {return {id: '1', success: true, message: 'signed up', token: '12345'}}
+    },
+    memoir: {
+      type: MemoirType,
+      resolve: () => {return {id: '1'}}
     }
   })
 })
