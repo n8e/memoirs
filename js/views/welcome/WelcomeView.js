@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
+import { Link, hashHistory } from 'react-router';
 
 class WelcomeView extends Component {
 	constructor(props) {
@@ -11,21 +12,25 @@ class WelcomeView extends Component {
 		this.props.relay.forceFetch();
 
 		this.renderAllMemoirs = this.renderAllMemoirs.bind(this);
+		this.goToMemoir = this.goToMemoir.bind(this);
+	}
+
+	goToMemoir(memoirId) {
+		hashHistory.push(`/memoir/view?memoirId=${memoirId}`);
 	}
 
 	renderAllMemoirs(memoirs) {
 		return memoirs.map(memoir => {
 			return (
-				<div key={memoir.node.memoirId} className="flex-child">
+				<div key={memoir.node.memoirId} className="flex-child" onClick={() => this.goToMemoir(memoir.node.memoirId)}>
 					<span>{memoir.node.title}</span>
-					<blockquote>{memoir.node.content}</blockquote>
+					<span>{memoir.node.content}</span>
 				</div>
 			);
 		});
 	}
 
 	render() {
-		console.log('this.props.viewer.memoirs.items.edges', this.props.viewer.memoirs.items.edges);
 		return (
       <div className="flex-container">
 				{ this.renderAllMemoirs(this.props.viewer.memoirs.items.edges) }
