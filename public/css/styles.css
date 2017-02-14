@@ -5,16 +5,19 @@
   height: 100vh;
   background-color: #f4f4f4;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: stretch;
+  padding-top: 2%;
 }
 .flex-child {
   align-self: center;
   background-color: #fff;
   box-shadow: 5px 5px 5px #888888;
-  width: 75%;
-  height: 100px;
+  width: 85%;
+  height: 150px;
   margin: 2%;
+  margin-top: 0;
+  padding: 4px;
 }
 .floating-right-nav-item {
   float: right;
