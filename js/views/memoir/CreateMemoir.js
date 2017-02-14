@@ -5,8 +5,6 @@ import { Link, hashHistory } from 'react-router';
 
 import CreateMemoirMutation from '../../mutations/CreateMemoirMutation';
 
-const titleCase = (text) => text.replace(/(^\w|\b\w)/g, (m) => m.toUpperCase());
-
 class CreateMemoir extends Component{
 	constructor(props) {
 		super(props);
@@ -25,9 +23,9 @@ class CreateMemoir extends Component{
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	onSuccess(res) {
+	onSuccess() {
 		this.setState({success: 'block'});
-		// hashHistory.push('/welcome');
+		hashHistory.push('/welcome');
 	}
 
 	onFailure() {
