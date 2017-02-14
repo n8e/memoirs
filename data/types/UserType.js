@@ -1,9 +1,11 @@
 import { GraphQLObjectType } from 'graphql';
 // remote methods
+import { getAllMemoirs } from '../remote/api/getAllMemoirs';
 // types
 import UserInfoType from './UserInfoType';
 import SignUpInfoType from './SignUpInfoType';
 import MemoirType from './MemoirType';
+import MemoirsType from './MemoirsType';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -19,6 +21,10 @@ const UserType = new GraphQLObjectType({
     memoir: {
       type: MemoirType,
       resolve: () => {return {id: '1'}}
+    },
+    memoirs: {
+      type: MemoirsType,
+      resolve: () => getAllMemoirs()
     }
   })
 })
