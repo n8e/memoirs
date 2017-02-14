@@ -8,53 +8,53 @@ const secretKey = config.secretKey;
 
 // create token for authentication
 const createToken = (user) => {
-    let token = jsonwebtoken.sign(user, secretKey, {
-        expiresIn: 1440
-    });
-    return token;
-}
+	let token = jsonwebtoken.sign(user, secretKey, {
+		expiresIn: 1440
+	});
+	return token;
+};
 
 export function createUser(input) {
-    let res;
-    let user = new User({
-        name: {
-            first: input.firstName,
-            last: input.lastName
-        },
-        email: input.email,
-        role: 2,
-        username: input.userName,
-        password: input.password
-    });
+	let res;
+	let user = new User({
+		name: {
+			first: input.firstName,
+			last: input.lastName
+		},
+		email: input.email,
+		role: 2,
+		username: input.userName,
+		password: input.password
+	});
 
-    let promise = Role.find({ id: user.role }).exec();
+	let promise = Role.find({ id: user.role }).exec();
 
-    return promise.then(roles => {
+	return promise.then(roles => {
       // add the role to the user before being saved
-      user.role = roles[0].title;
+		user.role = roles[0].title;
       // assign a token to the created user
-      let token = createToken(user);
+		let token = createToken(user);
       // save the user object
-      return user.save().then(res => {
-        if(res) {
-          return {
-              'success': true,
-              'message': 'User has been created!',
-              'token': token
-          };
-        } else {
-          return { 'status': 500, 'message': 'Duplicate Record' };
-        }
-      });
-    })
+		return user.save().then(res => {
+			if(res) {
+				return {
+					'success': true,
+					'message': 'User has been created!',
+					'token': token
+				};
+			} else {
+				return { 'status': 500, 'message': 'Duplicate Record' };
+			}
+		});
+	})
     .then(res => res)
     .catch(err => {
-      return new Error(err);
-    });
+	return new Error(err);
+});
 }
 
 export function signUp(args) {
-  return createUser(args).then(resp => {
-    return { signUpInfo: resp };
-  });
+	return createUser(args).then(resp => {
+		return { signUpInfo: resp };
+	});
 }
