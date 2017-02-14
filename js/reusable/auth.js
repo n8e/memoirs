@@ -1,19 +1,19 @@
 export function storeLoginObj(loginObj) {
-  localStorage.setItem('loggedIn', loginObj.loggedIn);
-  localStorage.setItem('userName', loginObj.userName);
-  return localStorage.setItem('token', loginObj.token);
+	localStorage.setItem('loggedIn', loginObj.loggedIn);
+	localStorage.setItem('userName', loginObj.userName);
+	return localStorage.setItem('token', loginObj.token);
 }
 
 export function clearLoginObj() {
-  localStorage.removeItem('loggedIn');
-  localStorage.removeItem('userName');
-  return localStorage.removeItem('token');
+	localStorage.removeItem('loggedIn');
+	localStorage.removeItem('userName');
+	return localStorage.removeItem('token');
 }
 
 export function getUserInfo() {
-  return {
-    loggedIn: localStorage.getItem('loggedIn'),
-    userName: localStorage.getItem('userName'),
-    token: localStorage.getItem('token')
-  };
+	return {
+		loggedIn: localStorage.getItem('loggedIn'),
+		userName: localStorage.getItem('userName'),
+		token: localStorage.getItem('token')
+	};
 }

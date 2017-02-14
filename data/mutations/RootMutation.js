@@ -5,12 +5,12 @@ import SignUpMutation from './SignUpMutation';
 import CreateMemoirMutation from './CreateMemoirMutation';
 
 const RootMutation = new GraphQLObjectType({
-  name: 'RootMutation',
-  fields: {
-    login: LoginMutation,
-    signUp: SignUpMutation,
-    createMemoir: CreateMemoirMutation,
-  }
+	name: 'RootMutation',
+	fields: {
+		login: LoginMutation,
+		signUp: SignUpMutation,
+		createMemoir: CreateMemoirMutation,
+	}
 });
 
 export default RootMutation;
