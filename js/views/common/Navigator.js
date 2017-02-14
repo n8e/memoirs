@@ -67,13 +67,13 @@ class Navigator extends Component {
 							<nav className="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
 								<ul className="nav sidebar-nav">
 									<li className="sidebar-brand">
-										<Link to={'/welcome'}>Memoirs</Link>
+										<Link to={'/welcome'} onClick={this.hamburgerCross}>Memoirs</Link>
 									</li>
 									<li>
-										<Link to={'/welcome'}><i className="fa fa-fw fa-home"></i> Home</Link>
+										<Link to={'/welcome'} onClick={this.hamburgerCross}><i className="fa fa-fw fa-home"></i> Home</Link>
 									</li>
 									<li>
-										<Link to={'/memoir'}><i className="fa fa-fw fa-file"></i> Create Memoir</Link>
+										<Link to={'/memoir'} onClick={this.hamburgerCross}><i className="fa fa-fw fa-file"></i> Create Memoir</Link>
 									</li>
 									<li>
 										<Link to={'/login'} onClick={this.doLogout}><i className="fa fa-fw fa-sign-out"></i> Logout</Link>
