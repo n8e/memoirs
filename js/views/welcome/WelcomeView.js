@@ -7,14 +7,28 @@ class WelcomeView extends Component {
 		this.state = {
 			error: false,
 		};
+
+		this.props.relay.forceFetch();
+
+		this.renderAllMemoirs = this.renderAllMemoirs.bind(this);
+	}
+
+	renderAllMemoirs(memoirs) {
+		return memoirs.map(memoir => {
+			return (
+				<div key={memoir.node.memoirId} className="flex-child">
+					<span>{memoir.node.title}</span>
+					<blockquote>{memoir.node.content}</blockquote>
+				</div>
+			);
+		});
 	}
 
 	render() {
+		console.log('this.props.viewer.memoirs.items.edges', this.props.viewer.memoirs.items.edges);
 		return (
       <div className="flex-container">
-        <div className="flex-child">The welcome view</div>
-        <div className="flex-child">Configuration</div>
-        <div className="flex-child">Other content</div>
+				{ this.renderAllMemoirs(this.props.viewer.memoirs.items.edges) }
       </div>
 		);
 	}
@@ -25,8 +39,19 @@ export default Relay.createContainer(WelcomeView, {
 	fragments: {
 		viewer: () => Relay.QL`
       fragment on User {
-        userInfo {
+        memoirs {
           id
+					items(first:16) {
+						edges {
+							node {
+								id
+								memoirId
+								title
+								content
+							}
+						}
+						totalCount
+					}
         }
       }
     `
