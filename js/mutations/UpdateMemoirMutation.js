@@ -10,6 +10,7 @@ export default class UpdateMemoirMutation extends Relay.Mutation {
 			memoirId: this.props.memoirId,
 			title: this.props.title,
 			content: this.props.content,
+			token: this.props.token,
 		};
 	}
 

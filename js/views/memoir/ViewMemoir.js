@@ -38,12 +38,14 @@ class ViewMemoir extends Component{
 	}
 
 	handleUpdate() {
+		let token = localStorage.getItem('token');
 		const onSuccess = this.onSuccess;
 		const onFailure = this.onFailure;
 		Relay.Store.commitUpdate(new UpdateMemoirMutation({
 			memoirId: this.props.viewer.oneMemoir.memoirId,
 			title: this.state.title,
 			content: this.state.content,
+			token,
 			viewer: this.props.viewer
 		}), {onFailure, onSuccess});
 	}

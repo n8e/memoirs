@@ -11,6 +11,7 @@ const UpdateMemoirMutation = mutationWithClientMutationId({
 		memoirId: { type: new GraphQLNonNull(GraphQLString) },
 		title: { type: new GraphQLNonNull(GraphQLString) },
 		content: { type: new GraphQLNonNull(GraphQLString) },
+		token: { type: new GraphQLNonNull(GraphQLString) },
 	},
 	outputFields: {
 		memoir: {
