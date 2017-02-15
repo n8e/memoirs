@@ -29,3 +29,6 @@
 .page-body {
   color: #fff;
 }
+.memoir-text-area {
+  height: 45vh !important;
+}
