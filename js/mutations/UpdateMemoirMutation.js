@@ -18,6 +18,7 @@ export default class UpdateMemoirMutation extends Relay.Mutation {
       fragment on UpdateMemoirPayload{
         memoir {
           id
+					memoirId
           title
           content
         }
@@ -29,7 +30,7 @@ export default class UpdateMemoirMutation extends Relay.Mutation {
 		return [{
 			type: 'FIELDS_CHANGE',
 			fieldIDs: {
-				memoir: this.props.viewer.memoir.memoirId
+				memoir: this.props.viewer.memoir.id
 			},
 		}];
 	}
@@ -40,6 +41,7 @@ UpdateMemoirMutation.fragments = {
     fragment on User {
       memoir {
         id
+				memoirId
         title
         content
       }

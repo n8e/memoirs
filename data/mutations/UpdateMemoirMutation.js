@@ -3,7 +3,7 @@ import { mutationWithClientMutationId } from 'graphql-relay';
 
 import MemoirType from '../types/MemoirType';
 
-import { updateMemoir } from '../remote/api/createMemoir';
+import { updateMemoir } from '../remote/api/updateMemoir';
 
 const UpdateMemoirMutation = mutationWithClientMutationId({
 	name: 'UpdateMemoir',
@@ -18,7 +18,7 @@ const UpdateMemoirMutation = mutationWithClientMutationId({
 			resolve: ({ memoir }) => memoir,
 		}
 	},
-	mutateAndGetPayload: (_, args) => updateMemoir(args),
+	mutateAndGetPayload: (args) => updateMemoir(args),
 });
 
 export default UpdateMemoirMutation;
