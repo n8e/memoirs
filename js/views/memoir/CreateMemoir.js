@@ -38,11 +38,13 @@ class CreateMemoir extends Component{
 	}
 
 	handleMemoirSave() {
+		let token = localStorage.getItem('token');
 		const onSuccess = this.onSuccess;
 		const onFailure = this.onFailure;
 		Relay.Store.commitUpdate(new CreateMemoirMutation({
 			title: this.state.memoir.title,
 			content: this.state.memoir.content,
+			token,
 			viewer: this.props.viewer
 		}), {onFailure, onSuccess});
 	}

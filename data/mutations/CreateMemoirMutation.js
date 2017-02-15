@@ -10,6 +10,7 @@ const CreateMemoirMutation = mutationWithClientMutationId({
 	inputFields: {
 		title: { type: new GraphQLNonNull(GraphQLString) },
 		content: { type: new GraphQLNonNull(GraphQLString) },
+		token: { type: new GraphQLNonNull(GraphQLString) },
 	},
 	outputFields: {
 		memoir: {

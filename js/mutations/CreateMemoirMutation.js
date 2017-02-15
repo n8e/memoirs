@@ -9,6 +9,7 @@ export default class CreateMemoirMutation extends Relay.Mutation {
 		return {
 			title: this.props.title,
 			content: this.props.content,
+			token: this.props.token,
 		};
 	}
 

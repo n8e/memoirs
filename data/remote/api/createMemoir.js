@@ -1,8 +1,10 @@
+import decode from 'jwt-decode';
 import Memoir from '../models/memoirs';
 
 export function createMemoir(args) {
-  // TODO: Include the req.decoded.id as part of the memoir object "ownerId"
+	const tokenValues = decode(args.token)._doc;
 	let memoir = new Memoir({
+		ownerId: [tokenValues._id],
 		title: args.title,
 		content: args.content,
 	});
