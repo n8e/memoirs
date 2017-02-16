@@ -32,3 +32,12 @@
 .memoir-text-area {
   height: 45vh !important;
 }
+.navbar-overall {
+  background: transparent;
+  height: 100%;
+  padding-top: 15px;
+}
+.nav-dropdown-menu, .nav-dropdown-menu a {
+  color: #1abc9c !important;
+  text-decoration: none;
+}

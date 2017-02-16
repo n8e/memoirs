@@ -46,15 +46,14 @@ class Navigator extends Component {
 			<div>
 				{ (this.state.widthSize >= 768) ?
 					(
-						<Navbar>
+						<Navbar className='navbar-overall'>
 							<Navbar.Header>
 								<Navbar.Brand>
-									<a href="/">Memoirs</a>
+									<Link to="/welcome" className='nav-dropdown-menu'>Memoirs</Link>
 								</Navbar.Brand>
 							</Navbar.Header>
 						<Nav className="floating-right-nav-item">
-							<NavItem eventKey={1} href="#">Memoirs</NavItem>
-							<NavDropdown eventKey={3} title={this.props.userInfo.name} id="basic-nav-dropdown">
+							<NavDropdown title={this.props.userInfo.name} id="basic-nav-dropdown" className='nav-dropdown-menu'>
 								<MenuItem href="#/memoir" onClick={this.goToMemoir}>Create Memoir</MenuItem>
 								<MenuItem divider />
 								<MenuItem href="#/login" onClick={this.doLogout}>Logout</MenuItem>
