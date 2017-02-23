@@ -41,3 +41,8 @@
   color: #1abc9c !important;
   text-decoration: none;
 }
+button {
+  padding-left: 6%;
+  padding-right: 6%;
+  border-radius: 4px;
+}

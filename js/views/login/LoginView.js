@@ -1,7 +1,10 @@
 import React,{ Component } from 'react';
 import Relay from 'react-relay';
-import { Grid, Row, Col, Form, FormGroup, FormControl, Checkbox, Button, Panel, ControlLabel, Alert } from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, Checkbox, Panel, Alert } from 'react-bootstrap';
 import { Link, hashHistory } from 'react-router';
+
+import FRC from 'formsy-react-components';
+const { Input } = FRC;
 
 import LoginMutation from '../../mutations/LoginMutation';
 import { storeLoginObj } from '../../reusable/auth';
@@ -11,20 +14,14 @@ const titleCase = (text) => text.replace(/(^\w|\b\w)/g, (m) => m.toUpperCase());
 class LoginView extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			fail: 'none',
-			success: 'none',
-			user: {
-				username: null,
-				password: null
-			}
+			success: 'none'
 		};
 
     // bind methods
 		this.onSuccess = this.onSuccess.bind(this);
 		this.onFailure = this.onFailure.bind(this);
-		this.handleChange = this.handleChange.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 		this.renderFormFields = this.renderFormFields.bind(this);
 	}
@@ -43,17 +40,12 @@ class LoginView extends Component {
 		this.setState({fail: 'block'});
 	}
 
-	handleChange(e) {
-		const { name, value } = e.target;
-		this.setState({user: Object.assign({}, this.state.user, {[name]: value})});
-	}
-
-	handleLogin() {
+	handleLogin(data) {
 		const onSuccess = this.onSuccess;
 		const onFailure = this.onFailure;
 		Relay.Store.commitUpdate(new LoginMutation({
-			username: this.state.user.username,
-			password: this.state.user.password,
+			username: data.username,
+			password: data.password,
 			viewer: this.props.viewer
 		}), {onFailure, onSuccess});
 	}
@@ -63,24 +55,21 @@ class LoginView extends Component {
 		return fields.map((field, i) => {
 			let fieldTitleCase = titleCase(field);
 			return (
-				<FormGroup key={i} controlId={`formHorizontal${fieldTitleCase}`}>
-					<Col componentClass={ControlLabel} sm={2}>
-						{fieldTitleCase}
-					</Col>
-					<Col sm={10}>
-						<FormControl
-							type={(field === 'password') ? 'password' : 'text'}
-							name={field}
-							placeholder={fieldTitleCase}
-							onChange={this.handleChange}
-						/>
-					</Col>
-				</FormGroup>
+				<Input
+					key={i}
+					name={field}
+					value=""
+					label={fieldTitleCase}
+					type={(field === 'password') ? 'password' : 'text'}
+					placeholder={fieldTitleCase}
+					required
+        />
 			);
 		});
 	}
 
 	render() {
+		let loginForm = null;
 		return (
       <Grid>
         <Row>
@@ -95,26 +84,37 @@ class LoginView extends Component {
           <Alert bsStyle='success' ref='successAlert' style={{display: this.state.success}}>
             <strong>Login successful!</strong>
           </Alert>
-          <div>
-						{this.renderFormFields()}
-            <FormGroup>
-              <Col smOffset={2} sm={10}>
-                <Checkbox>Remember me</Checkbox>
-              </Col>
-            </FormGroup>
+					<FRC.Form
+						onSubmit={this.handleLogin}
+						layout="horizontal"
+						validateOnSubmit={true}
+						validatePristine={true}
+						disabled={false}
+						ref={(form) => { loginForm = form; }}
+					>
+						<fieldset>
 
-            <FormGroup>
-              <Col smOffset={2} sm={10}>
-                <Button onClick={this.handleLogin}>
-                  Sign in
-                </Button>
-              </Col>
-            </FormGroup>
+							{this.renderFormFields()}
 
-            <Col smOffset={2} sm={10}>
-              <Link to={'/create'}>Sign up link</Link>
-            </Col>
-          </div>
+							<FormGroup>
+								<Col smOffset={2} sm={10}>
+									<Checkbox>Remember me</Checkbox>
+								</Col>
+							</FormGroup>
+
+
+							<Col smOffset={2} sm={10}>
+								<button type='submit'>
+									Sign in
+								</button>
+							</Col>
+
+							<Col smOffset={2} sm={10}>
+								<Link to={'/create'}>Sign up link</Link>
+							</Col>
+
+						</fieldset>
+					</FRC.Form>
         </Row>
       </Grid>
 		);
