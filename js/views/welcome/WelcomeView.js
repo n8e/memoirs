@@ -11,7 +11,8 @@ class WelcomeView extends Component {
     super(props);
     this.state = {
       error: false,
-      searchTerm: null,
+      searchInput: null,
+      type: 'title',
       searching: false,
       searchResults: [],
     };
@@ -24,11 +25,11 @@ class WelcomeView extends Component {
     this.props.relay.forceFetch();
   }
 
-  handleSearch({ searchInput }) {
+  handleSearch({ searchInput, type }) {
     const searchSet = this.props.viewer.memoirs.items.edges;
     const resultSet = [];
     for (let i = 0, n = searchSet.length; i < n; i++) {
-      if (searchSet[i].node.title.toLowerCase().includes(searchInput.toLowerCase())) {
+      if (searchSet[i].node[type].toLowerCase().includes(searchInput.toLowerCase())) {
         resultSet.push(searchSet[i].node);
       }
     }
@@ -36,8 +37,9 @@ class WelcomeView extends Component {
   }
 
   handleChange(e) {
-    const { value } = e.target;
-    this.handleSearch({ searchInput: value });
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+    this.handleSearch({ searchInput: this.state.searchInput, type: this.state.type });
   }
 
   goToMemoir(memoirId) {
@@ -69,38 +71,37 @@ class WelcomeView extends Component {
         <h4 style={{ color: '#000' }}>{memoir.node.title}</h4>
         <EllipsisText text={memoir.node.content} length={40} />
       </div>
-			));
+    ));
   }
 
   render() {
     let searchForm = null;
     return (
       <div className="flex-container">
-        <div>
-          <span className="glyphicon glyphicon-search" />
-          <input maxLength="10" type="text" onChange={this.handleChange} name="searcherInput" />
-        </div>
-        <div>
-          <FRC.Form
-            onSubmit={this.handleSearch}
-            layout="horizontal"
-            validateOnSubmit={false}
-            validatePristine={false}
-            disabled={false}
-            ref={(form) => { searchForm = form; }}
+        <div style={{ marginBottom: '20px' }}>
+          <span
+            className="input-group-addon"
+            style={{ width: '10%', display: 'inline-block' }}
           >
-            <fieldset>
-              <Input
-                name="searchInput"
-                value=""
-                label="Search Memoir by Title"
-                maxLength="10"
-                type="text"
-                addonBefore={<span className="glyphicon glyphicon-search" />}
-              />
-              <button type="submit">Search</button>
-            </fieldset>
-          </FRC.Form>
+            <span className="glyphicon glyphicon-search" />
+          </span>
+          <input
+            maxLength="10"
+            type="text"
+            onChange={this.handleChange}
+            name="searchInput"
+            className="form-control search-input"
+          />
+          <select
+            name="type"
+            defaultValue={this.state.type}
+            onChange={this.handleChange}
+            className="input-group-addon search-select"
+          >
+            <option value="">Select...</option>
+            <option value="title">Title</option>
+            <option value="content">Content</option>
+          </select>
         </div>
 
         {this.state.searching ?
