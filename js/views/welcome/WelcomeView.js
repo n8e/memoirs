@@ -21,6 +21,7 @@ class WelcomeView extends Component {
     this.goToMemoir = this.goToMemoir.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
 
     this.props.relay.forceFetch();
   }
@@ -36,10 +37,22 @@ class WelcomeView extends Component {
     this.setState({ searchResults: resultSet, searching: true });
   }
 
+  /*
+  * Add an onChange event on the search input tag and assign this function
+  * in order to do the search as the user types
+  */
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
     this.handleSearch({ searchInput: this.state.searchInput, type: this.state.type });
+  }
+
+  handleKeyUp(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+    if (e.keyCode === 13) {
+      this.handleSearch({ searchInput: this.state.searchInput, type: this.state.type });
+    }
   }
 
   goToMemoir(memoirId) {
@@ -88,8 +101,8 @@ class WelcomeView extends Component {
           <input
             maxLength="10"
             type="text"
-            onChange={this.handleChange}
             name="searchInput"
+            onKeyUp={this.handleKeyUp}
             className="form-control search-input"
           />
           <select
