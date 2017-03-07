@@ -46,12 +46,14 @@ button {
   padding-right: 6%;
   border-radius: 4px;
 }
+
 .search-input {
    border-radius: 0 0 0 0;
    display: inline-block;
    height: 40px;
    width: 70%;
 }
+
 .search-select {
   font-size: small;
   position: relative;
@@ -59,6 +61,20 @@ button {
   width: 18%;
   padding: 0;
 }
+
 .search-select:focus {
   outline: none;
+}
+
+.search-container-div {
+	margin-bottom: 20px;
+	width: 50%;
+	margin: 0 auto;
+}
+
+.search-glyph {
+	width: 10%;
+	display: inline-block;
+	height: 40px;
+	margin-bottom: 2px;
 }

@@ -44,7 +44,7 @@ class WelcomeView extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-    this.handleSearch({ searchInput: this.state.searchInput, type: this.state.type });
+    // this.handleSearch({ searchInput: this.state.searchInput, type: this.state.type });
   }
 
   handleKeyUp(e) {
@@ -91,11 +91,8 @@ class WelcomeView extends Component {
     let searchForm = null;
     return (
       <div className="flex-container">
-        <div style={{ marginBottom: '20px' }}>
-          <span
-            className="input-group-addon"
-            style={{ width: '10%', display: 'inline-block' }}
-          >
+        <div className="search-container-div">
+          <span className="input-group-addon search-glyph">
             <span className="glyphicon glyphicon-search" />
           </span>
           <input
