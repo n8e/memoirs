@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Link, hashHistory } from 'react-router';
 import { clearLoginObj } from '../../reusable/auth';
@@ -16,7 +16,6 @@ class Navigator extends Component {
     };
 
     this.goToMemoir = this.goToMemoir.bind(this);
-    this.doLogout = this.doLogout.bind(this);
     this.hamburgerCross = this.hamburgerCross.bind(this);
   }
 
