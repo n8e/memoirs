@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
-import { Grid, Row, Col, FormGroup, Button, Panel, Alert } from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, FormControl, Button, Panel, Alert, ControlLabel } from 'react-bootstrap';
 
 import SignUpMutation from '../../mutations/SignUpMutation';
 
