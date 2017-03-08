@@ -5,12 +5,14 @@
   "repository": "n8e/memoirs",
   "version": "0.1.0",
   "scripts": {
-    "preinstall": "babel-cli",
+    "prestart": "npm i babel-cli webpack -g",
     "start": "babel-node ./server.js",
     "update-schema": "babel-node ./scripts/updateSchema.js",
     "test": "jest"
   },
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.23.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-polyfill": "^6.13.0",
