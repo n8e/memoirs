@@ -11,6 +11,7 @@ class WelcomeView extends Component {
     super(props);
     this.state = {
       error: false,
+      widthSize: window.outerWidth,
       searchInput: null,
       type: 'title',
       searching: false,
@@ -29,7 +30,7 @@ class WelcomeView extends Component {
   handleSearch({ searchInput, type }) {
     const searchSet = this.props.viewer.memoirs.items.edges;
     const resultSet = [];
-    for (let i = 0, n = searchSet.length; i < n; i++) {
+    for (let i = 0, n = searchSet.length; i < n; i += 1) {
       if (searchSet[i].node[type].toLowerCase().includes(searchInput.toLowerCase())) {
         resultSet.push(searchSet[i].node);
       }
@@ -88,7 +89,6 @@ class WelcomeView extends Component {
   }
 
   render() {
-    let searchForm = null;
     return (
       <div className="flex-container">
         <div className="search-container-div">
@@ -135,17 +135,17 @@ export default Relay.createContainer(WelcomeView, {
       fragment on User {
         memoirs {
           id
-					items(first:16) {
-						edges {
-							node {
-								id
-								memoirId
-								title
-								content
-							}
-						}
-						totalCount
-					}
+          items(first:16) {
+            edges {
+              node {
+                id
+                memoirId
+                title
+                content
+              }
+            }
+            totalCount
+          }
         }
       }
     `,
