@@ -69,7 +69,7 @@ class WelcomeView extends Component {
         <h4 style={{ color: '#000' }}>
           {memoir.title}
         </h4>
-        <EllipsisText text={memoir.content} length={39} />
+        <EllipsisText text={memoir.content} length={50} />
       </div>
     ));
   }
