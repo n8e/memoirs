@@ -11,7 +11,6 @@ class WelcomeView extends Component {
     super(props);
     this.state = {
       error: false,
-      widthSize: window.outerWidth,
       searchInput: null,
       type: 'title',
       searching: false,
