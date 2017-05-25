@@ -9,39 +9,37 @@ import MemoirType from './MemoirType';
 import MemoirsType from './MemoirsType';
 
 const UserType = new GraphQLObjectType({
-	name: 'User',
-	fields: () => ({
-		userInfo: {
-			type: UserInfoType,
-			resolve: () => {return {id: '1'};}
-		},
-		signUpInfo: {
-			type: SignUpInfoType,
-			resolve: () => {
-				return {
-					id: '1',
-					success: true,
-					message: 'signed up',
-					token: '12345'
-				};
-			}
-		},
-		memoir: {
-			type: MemoirType,
-			resolve: () => {return {id: '1'};}
-		},
-		memoirs: {
-			type: MemoirsType,
-			resolve: () => getAllMemoirs()
-		},
-		oneMemoir: {
-			type: MemoirType,
-			args: {
-				memoirId: { type: GraphQLString }
-			},
-			resolve: (_, args) => getMemoirById(args)
-		}
-	})
+  name: 'User',
+  fields: () => ({
+    userInfo: {
+      type: UserInfoType,
+      resolve: () => ({ id: '1' }),
+    },
+    signUpInfo: {
+      type: SignUpInfoType,
+      resolve: () => ({
+        id: '1',
+        success: true,
+        message: 'signed up',
+        token: '12345',
+      }),
+    },
+    memoir: {
+      type: MemoirType,
+      resolve: () => ({ id: '1' }),
+    },
+    memoirs: {
+      type: MemoirsType,
+      resolve: () => getAllMemoirs(),
+    },
+    oneMemoir: {
+      type: MemoirType,
+      args: {
+        memoirId: { type: GraphQLString },
+      },
+      resolve: (_, args) => getMemoirById(args),
+    },
+  }),
 });
 
 export default UserType;
