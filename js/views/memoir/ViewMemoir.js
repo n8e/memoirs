@@ -112,10 +112,10 @@ class ViewMemoir extends Component {
           <div>
             <Alert bsStyle="danger" style={{ display: this.state.fail }}>
               <strong>Error!</strong> Failed to update
-						</Alert>
+            </Alert>
             {
-							this.state.editable ? this.renderEditableFields() : this.renderUneditableFields()
-						}
+              this.state.editable ? this.renderEditableFields() : this.renderUneditableFields()
+            }
 
             { this.state.editable ? (
               <FormGroup>
@@ -123,15 +123,15 @@ class ViewMemoir extends Component {
                   <Button onClick={this.handleUpdate}>Update</Button>
                 </Col>
               </FormGroup>
-						) : (
-						  <div>
-						    <label className="switch">
-						      <input type="checkbox" onChange={this.handleEditing} />
-						      <div className="slider round" />
-						    </label>
-						    <div>Edit</div>
-						  </div>
-						)}
+            ) : (
+              <div>
+                <label className="switch">
+                  <input type="checkbox" onChange={this.handleEditing} />
+                  <div className="slider round" />
+                </label>
+                <div>Edit</div>
+              </div>
+            )}
           </div>
         </Row>
       </Grid>
@@ -140,7 +140,14 @@ class ViewMemoir extends Component {
 }
 
 ViewMemoir.propTypes = {
-  viewer: PropTypes.object.isRequired,
+  viewer: PropTypes.shape({
+    oneMemoir: PropTypes.shape({
+      id: PropTypes.string,
+      memoirId: PropTypes.string,
+      title: PropTypes.string,
+      content: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default Relay.createContainer(ViewMemoir, {
@@ -150,7 +157,7 @@ export default Relay.createContainer(ViewMemoir, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-				${UpdateMemoirMutation.getFragment('viewer')},
+        ${UpdateMemoirMutation.getFragment('viewer')},
         oneMemoir(memoirId: $memoirId) {
           id
           memoirId

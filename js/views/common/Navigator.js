@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Link, hashHistory } from 'react-router';
-import { clearLoginObj } from '../../reusable/auth';
-
-const doLogout = () => clearLoginObj();
 
 class Navigator extends Component {
   constructor(props) {
@@ -16,6 +13,7 @@ class Navigator extends Component {
     };
 
     this.goToMemoir = this.goToMemoir.bind(this);
+    this.goToLogout = this.goToLogout.bind(this);
     this.hamburgerCross = this.hamburgerCross.bind(this);
   }
 
@@ -34,6 +32,10 @@ class Navigator extends Component {
   goToMemoir() {
     hashHistory.push('/memoir');
     this.setState({ isClosed: true, showOverlay: true, toggled: 'toggled' });
+  }
+
+  goToLogout() {
+    hashHistory.push('/logout');
   }
 
   render() {
@@ -55,7 +57,7 @@ class Navigator extends Component {
                 >
                   <MenuItem href="#/memoir" onClick={this.goToMemoir}>Create Memoir</MenuItem>
                   <MenuItem divider />
-                  <MenuItem href="#/login" onClick={doLogout}>Logout</MenuItem>
+                  <MenuItem href="#/login" onClick={this.goToLogout}>Logout</MenuItem>
                 </NavDropdown>
               </Nav>
             </Navbar>
@@ -118,7 +120,9 @@ class Navigator extends Component {
 }
 
 Navigator.propTypes = {
-  userInfo: PropTypes.object.isRequired,
+  userInfo: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
 };
 
 export default Navigator;

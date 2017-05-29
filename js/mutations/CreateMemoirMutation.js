@@ -1,20 +1,20 @@
 import Relay from 'react-relay';
 
 export default class CreateMemoirMutation extends Relay.Mutation {
-	getMutation() {
-		return Relay.QL`mutation{createMemoir}`;
-	}
+  getMutation() {
+    return Relay.QL`mutation{createMemoir}`;
+  }
 
-	getVariables() {
-		return {
-			title: this.props.title,
-			content: this.props.content,
-			token: this.props.token,
-		};
-	}
+  getVariables() {
+    return {
+      title: this.props.title,
+      content: this.props.content,
+      token: this.props.token,
+    };
+  }
 
-	getFatQuery() {
-		return Relay.QL`
+  getFatQuery() {
+    return Relay.QL`
       fragment on CreateMemoirPayload{
         memoir {
           id
@@ -23,20 +23,20 @@ export default class CreateMemoirMutation extends Relay.Mutation {
         }
       }
     `;
-	}
+  }
 
-	getConfigs() {
-		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				memoir: this.props.viewer.memoir.id
-			},
-		}];
-	}
+  getConfigs() {
+    return [{
+      type: 'FIELDS_CHANGE',
+      fieldIDs: {
+        memoir: this.props.viewer.memoir.id,
+      },
+    }];
+  }
 }
 
 CreateMemoirMutation.fragments = {
-	viewer: () => Relay.QL`
+  viewer: () => Relay.QL`
     fragment on User {
       memoir {
         id
@@ -44,5 +44,5 @@ CreateMemoirMutation.fragments = {
         content
       }
     }
-  `
+  `,
 };

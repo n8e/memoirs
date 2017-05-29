@@ -1,4 +1,6 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
+
+import { getUserInfo } from '../reusable/auth';
 // remote methods
 import { getAllMemoirs } from '../remote/api/getAllMemoirs';
 import { getMemoirById } from '../remote/api/getMemoirById';
@@ -13,7 +15,7 @@ const UserType = new GraphQLObjectType({
   fields: () => ({
     userInfo: {
       type: UserInfoType,
-      resolve: () => ({ id: '1' }),
+      resolve: () => getUserInfo(),
     },
     signUpInfo: {
       type: SignUpInfoType,

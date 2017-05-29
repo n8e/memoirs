@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
+import Relay from 'react-relay';
 
 import Navigator from '../common/Navigator';
-import { getUserInfo } from '../../reusable/auth';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userInfo: {
-        name: getUserInfo().userName,
-        loggedIn: getUserInfo().loggedIn,
-        token: getUserInfo().token,
+        name: this.props.viewer.userInfo.userName,
+        loggedIn: this.props.viewer.userInfo.loggedIn,
+        token: this.props.viewer.userInfo.token,
       },
     };
   }
@@ -26,7 +26,26 @@ class App extends Component {
 }
 
 App.propTypes = {
+  viewer: PropTypes.shape({
+    userInfo: PropTypes.shape({
+      userName: PropTypes.string,
+      loggedIn: PropTypes.bool,
+      token: PropTypes.string,
+    }),
+  }).isRequired,
   children: PropTypes.element.isRequired,
 };
 
-export default App;
+export default Relay.createContainer(App, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+        userInfo {
+          userName
+          loggedIn
+          token
+        }
+      }
+    `,
+  },
+});

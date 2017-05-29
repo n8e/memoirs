@@ -1,17 +1,17 @@
-const env = process.env.NODE_ENV || 'development';
-if (env === 'development') {
-  require('dotenv').load();
-}
-
 import chokidar from 'chokidar';
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
 import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import {clean} from 'require-clean';
-import {exec} from 'child_process';
+import { clean } from 'require-clean';
+import { exec } from 'child_process';
 import mongoose from 'mongoose';
+
+const env = process.env.NODE_ENV || 'development';
+if (env === 'development') {
+  require('dotenv').load();
+}
 
 mongoose.Promise = global.Promise;
 
@@ -25,23 +25,24 @@ let appServer;
 function startAppServer(callback) {
   // Serve the Relay app
   const compiler = webpack({
-    entry: path.resolve(__dirname, 'js', 'app.js'),
+    entry: path.resolve(__dirname, 'js', 'main.js'),
     module: {
       loaders: [
         {
           exclude: /node_modules/,
           loader: 'babel',
           test: /\.js$/,
-        }
-      ]
+        },
+      ],
     },
-    output: {filename: '/app.js', path: '/', publicPath: '/js/'}
+    output: { filename: '/bundle.js', path: '/', publicPath: '/js/' },
   });
   appServer = new WebpackDevServer(compiler, {
     contentBase: '/public/',
-    proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
+    hot: true,
+    proxy: { '/graphql': `http://localhost:${GRAPHQL_PORT}` },
     publicPath: '/js/',
-    stats: {colors: true}
+    stats: { colors: true },
   });
   // Serve static resources
   appServer.use('/', express.static(path.resolve(__dirname, 'public')));
@@ -56,7 +57,7 @@ function startAppServer(callback) {
 function startGraphQLServer(callback) {
   // Expose a GraphQL endpoint
   clean('./data/schema');
-  const {Schema} = require('./data/schema');
+  const { Schema } = require('./data/schema');
   const graphQLApp = express();
   graphQLApp.use('/', graphQLHTTP({
     graphiql: true,
@@ -75,12 +76,12 @@ function startGraphQLServer(callback) {
 
 function openDatabaseConnection() {
   mongoose.connect(config.database, (err) => {
-  if (err) {
-    console.log('Error when connecting:', err);
-  } else {
-    console.log('Server connected to the database.');
-  }
-});
+    if (err) {
+      console.log('Error when connecting:', err);
+    } else {
+      console.log('Server connected to the database.');
+    }
+  });
 }
 
 function startServers(callback) {
@@ -97,7 +98,7 @@ function startServers(callback) {
     console.log(stdout);
     let doneTasks = 0;
     function handleTaskDone() {
-      doneTasks++;
+      doneTasks += 1;
       if (doneTasks === 2 && callback) {
         callback();
       }

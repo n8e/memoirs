@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Relay from 'react-relay';
 import { Grid, Row, Col, FormGroup, FormControl, Button, Panel, Alert, ControlLabel } from 'react-bootstrap';
 
@@ -101,9 +101,7 @@ class CreateUserView extends Component {
             { this.renderFormFields() }
             <FormGroup>
               <Col smOffset={2} sm={10}>
-                <Button onClick={this.handleSignUp}>
-                  Sign up
-                </Button>
+                <Button onClick={this.handleSignUp}>Sign up</Button>
               </Col>
             </FormGroup>
           </div>
@@ -112,6 +110,14 @@ class CreateUserView extends Component {
     );
   }
 }
+
+CreateUserView.propTypes = {
+  viewer: PropTypes.shape({
+    signUpInfo: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
 export default Relay.createContainer(CreateUserView, {
   fragments: {

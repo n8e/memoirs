@@ -4,7 +4,6 @@ import { Grid, Row, Col, FormGroup, Checkbox, Panel, Alert } from 'react-bootstr
 import { Link, hashHistory } from 'react-router';
 import FRC from 'formsy-react-components';
 import LoginMutation from '../../mutations/LoginMutation';
-import { storeLoginObj } from '../../reusable/auth';
 
 const { Input } = FRC;
 
@@ -25,12 +24,7 @@ class LoginView extends Component {
     this.renderFormFields = this.renderFormFields.bind(this);
   }
 
-  onSuccess(res) {
-    storeLoginObj({
-      loggedIn: res.login.userInfo.loggedIn,
-      userName: res.login.userInfo.userName,
-      token: res.login.userInfo.token,
-    });
+  onSuccess() {
     this.setState({ success: 'block' });
     hashHistory.push('/welcome');
   }
@@ -112,8 +106,8 @@ class LoginView extends Component {
 
               <Col smOffset={2} sm={10}>
                 <button type="submit">
-									Sign in
-								</button>
+                  Sign in
+                </button>
               </Col>
 
               <Col smOffset={2} sm={10}>
@@ -129,7 +123,11 @@ class LoginView extends Component {
 }
 
 LoginView.propTypes = {
-  viewer: PropTypes.object.isRequired,
+  viewer: PropTypes.shape({
+    userInfo: PropTypes.shape({
+      userName: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default Relay.createContainer(LoginView, {

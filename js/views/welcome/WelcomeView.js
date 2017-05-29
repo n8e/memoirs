@@ -124,7 +124,14 @@ class WelcomeView extends Component {
 }
 
 WelcomeView.propTypes = {
-  viewer: PropTypes.object.isRequired,
+  viewer: PropTypes.shape({
+    memoirs: PropTypes.shape({
+      id: PropTypes.string,
+      items: PropTypes.shape({
+        edges: PropTypes.array,
+      }),
+    }),
+  }).isRequired,
   relay: PropTypes.object.isRequired,
 };
 

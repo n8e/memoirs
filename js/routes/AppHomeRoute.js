@@ -1,6 +1,6 @@
-import Relay from 'react-relay';
+import Relay, { Route } from 'react-relay';
 
-export default class extends Relay.Route {
+export default class extends Route {
   static queries = {
     viewer: () => Relay.QL`
       query {

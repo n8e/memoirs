@@ -1,62 +1,70 @@
-import React,{ Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Relay from 'react-relay';
-import { Grid, Row, Col, Panel, Alert, FormGroup, Checkbox, Button, ControlLabel, FormControl } from 'react-bootstrap';
-import { Link, hashHistory } from 'react-router';
+import { Grid, Row, Col, Alert, FormGroup, Button, ControlLabel, FormControl } from 'react-bootstrap';
+import { hashHistory } from 'react-router';
 
 import CreateMemoirMutation from '../../mutations/CreateMemoirMutation';
 
-class CreateMemoir extends Component{
-	constructor(props) {
-		super(props);
-		this.state = {
-			fail: 'none',
-			success: 'none',
-			memoir: {
-				title: null,
-				content: null,
-			}
-		};
+class CreateMemoir extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fail: 'none',
+      success: 'none',
+      memoir: {
+        title: null,
+        content: null,
+      },
+    };
 
-		this.handleMemoirSave = this.handleMemoirSave.bind(this);
-		this.onSuccess = this.onSuccess.bind(this);
-		this.onFailure = this.onFailure.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-	}
+    this.handleMemoirSave = this.handleMemoirSave.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onFailure = this.onFailure.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-	onSuccess() {
-		this.setState({success: 'block'});
-		hashHistory.push('/welcome');
-	}
+  onSuccess() {
+    this.setState({ success: 'block' });
+    hashHistory.push('/welcome');
+  }
 
-	onFailure() {
-		this.setState({fail: 'block'});
-	}
+  onFailure() {
+    this.setState({ fail: 'block' });
+  }
 
-	handleChange(e) {
-		const { name, value } = e.target;
-		this.setState({memoir: Object.assign({}, this.state.memoir, {[name]: value})});
-	}
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ memoir: Object.assign({}, this.state.memoir, { [name]: value }) });
+  }
 
-	handleMemoirSave() {
-		let token = localStorage.getItem('token');
-		const onSuccess = this.onSuccess;
-		const onFailure = this.onFailure;
-		Relay.Store.commitUpdate(new CreateMemoirMutation({
-			title: this.state.memoir.title,
-			content: this.state.memoir.content,
-			token,
-			viewer: this.props.viewer
-		}), {onFailure, onSuccess});
-	}
+  handleMemoirSave() {
+    const token = localStorage.getItem('token');
+    const onSuccess = this.onSuccess;
+    const onFailure = this.onFailure;
+    Relay.Store.commitUpdate(new CreateMemoirMutation({
+      title: this.state.memoir.title,
+      content: this.state.memoir.content,
+      token,
+      viewer: this.props.viewer,
+    }), { onFailure, onSuccess });
+  }
 
-	render() {
-		return(
+  render() {
+    return (
       <Grid>
         <Row className="page-body">
-          <Alert bsStyle='danger' ref='failAlert' style={{display: this.state.fail}}>
+          <Alert
+            bsStyle="danger"
+            ref={(failAlert) => { this.failAlert = failAlert; }}
+            style={{ display: this.state.fail }}
+          >
             <strong>Error!</strong> Failed to save
           </Alert>
-          <Alert bsStyle='success' ref='successAlert' style={{display: this.state.success}}>
+          <Alert
+            bsStyle="success"
+            ref={(successAlert) => { this.successAlert = successAlert; }}
+            style={{ display: this.state.success }}
+          >
             <strong>Memoir created successfully!</strong>
           </Alert>
           <div>
@@ -99,19 +107,27 @@ class CreateMemoir extends Component{
           </div>
         </Row>
       </Grid>
-		);
-	}
+    );
+  }
 }
 
+CreateMemoir.propTypes = {
+  viewer: PropTypes.shape({
+    memoir: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
 export default Relay.createContainer(CreateMemoir, {
-	fragments: {
-		viewer: () => Relay.QL`
+  fragments: {
+    viewer: () => Relay.QL`
       fragment on User {
         ${CreateMemoirMutation.getFragment('viewer')},
         memoir {
           id
         }
       }
-    `
-	}
+    `,
+  },
 });

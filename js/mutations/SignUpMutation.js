@@ -1,22 +1,22 @@
 import Relay from 'react-relay';
 
 export default class SignUpMutation extends Relay.Mutation {
-	getMutation() {
-		return Relay.QL`mutation{signUp}`;
-	}
+  getMutation() {
+    return Relay.QL`mutation{signUp}`;
+  }
 
-	getVariables() {
-		return {
-			firstName: this.props.firstName,
-			lastName: this.props.lastName,
-			userName: this.props.userName,
-			email: this.props.email,
-			password: this.props.password
-		};
-	}
+  getVariables() {
+    return {
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
+      userName: this.props.userName,
+      email: this.props.email,
+      password: this.props.password,
+    };
+  }
 
-	getFatQuery() {
-		return Relay.QL`
+  getFatQuery() {
+    return Relay.QL`
       fragment on SignUpPayload{
         signUpInfo {
           id
@@ -26,20 +26,20 @@ export default class SignUpMutation extends Relay.Mutation {
         }
       }
     `;
-	}
+  }
 
-	getConfigs() {
-		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				signUpInfo: this.props.viewer.signUpInfo.id
-			},
-		}];
-	}
+  getConfigs() {
+    return [{
+      type: 'FIELDS_CHANGE',
+      fieldIDs: {
+        signUpInfo: this.props.viewer.signUpInfo.id,
+      },
+    }];
+  }
 }
 
 SignUpMutation.fragments = {
-	viewer: () => Relay.QL`
+  viewer: () => Relay.QL`
     fragment on User {
       signUpInfo {
         id
@@ -48,5 +48,5 @@ SignUpMutation.fragments = {
         token
       }
     }
-  `
+  `,
 };
