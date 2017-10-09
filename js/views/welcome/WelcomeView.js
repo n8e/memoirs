@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Relay from 'react-relay';
-import { Link, hashHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 import EllipsisText from 'react-ellipsis-text';
 import FRC from 'formsy-react-components';
 

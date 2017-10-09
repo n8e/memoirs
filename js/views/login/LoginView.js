@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import { Grid, Row, Col, FormGroup, Checkbox, Panel, Alert } from 'react-bootstrap';
 import { Link, hashHistory } from 'react-router';

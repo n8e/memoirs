@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import { Grid, Row, Col, Alert, FormGroup, Button, ControlLabel, FormControl } from 'react-bootstrap';
 import { hashHistory } from 'react-router';
-
+import global from 'global';
 import CreateMemoirMutation from '../../mutations/CreateMemoirMutation';
 
 class CreateMemoir extends Component {
@@ -38,7 +39,8 @@ class CreateMemoir extends Component {
   }
 
   handleMemoirSave() {
-    const token = localStorage.getItem('token');
+    console.log('GLOBAL - CREATE MEMOIR', global);
+    const token = global.token;
     const onSuccess = this.onSuccess;
     const onFailure = this.onFailure;
     Relay.Store.commitUpdate(new CreateMemoirMutation({

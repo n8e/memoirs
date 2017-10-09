@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import { Alert, Grid, Row, Col, FormGroup, FormControl, Button, ControlLabel } from 'react-bootstrap';
-
+import global from 'global';
 import UpdateMemoirMutation from '../../mutations/UpdateMemoirMutation';
 
 const titleCase = text => text.replace(/(^\w|\b\w)/g, m => m.toUpperCase());
@@ -38,7 +39,8 @@ class ViewMemoir extends Component {
   }
 
   handleUpdate() {
-    const token = localStorage.getItem('token');
+    console.log('GLOBAL - CREATE MEMOIR', global);
+    const token = global.token;
     const onSuccess = this.onSuccess;
     const onFailure = this.onFailure;
     Relay.Store.commitUpdate(new UpdateMemoirMutation({

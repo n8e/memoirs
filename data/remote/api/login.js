@@ -4,6 +4,7 @@ import { storeLoginObj } from '../../reusable/auth';
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../../config')[env];
+
 const secretKey = config.secretKey;
 
 // create token for authentication
@@ -14,7 +15,7 @@ const createToken = (user) => {
   return token;
 };
 
-export function signIn(input) {
+export function login(input) {
   const promise = User.find({ username: input.username }).exec();
 
   return promise.then((user) => {
@@ -35,15 +36,14 @@ export function signIn(input) {
     } else {
       throw { status: 401, message: 'User does not exist' };
     }
-  }).catch(err => new Error(err));
-}
-
-export function login(args) {
-  const userReturned = signIn(args);
-  storeLoginObj({
-    loggedIn: userReturned.loggedIn,
-    userName: userReturned.userName,
-    token: userReturned.token,
-  });
-  return { userInfo: userReturned };
+  })
+  .then((usr) => {
+    storeLoginObj({
+      loggedIn: usr.loggedIn,
+      userName: usr.userName,
+      token: usr.token,
+    });
+    return { userInfo: usr };
+  })
+  .catch(err => new Error(err));
 }

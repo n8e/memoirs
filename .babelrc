@@ -1,5 +1,15 @@
 {
   "passPerPreset": true,
+  "plugins": [
+    ["relay", {
+      "compat": true,
+      "schema": "data/schema.graphql",
+      "enforceSchema": true,
+      "suppressWarnings": false,
+      "debug": true,
+      }
+    ]
+  ],
   "presets": [
     {
       "plugins": [

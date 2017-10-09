@@ -16,6 +16,7 @@ if (env === 'development') {
 mongoose.Promise = global.Promise;
 
 const config = require('./config')[env];
+
 const APP_PORT = config.appPort;
 const GRAPHQL_PORT = config.graphqlPort;
 
@@ -32,15 +33,21 @@ function startAppServer(callback) {
           exclude: /node_modules/,
           loader: 'babel',
           test: /\.js$/,
+          query: {
+            presets: ['es2015', 'react', 'stage-0'],
+          },
         },
       ],
     },
-    output: { filename: '/bundle.js', path: '/', publicPath: '/js/' },
+    output: {
+      filename: 'js/bundle.js',
+      path: path.resolve(__dirname, 'public/'),
+    },
   });
   appServer = new WebpackDevServer(compiler, {
     contentBase: '/public/',
     hot: true,
-    proxy: { '/graphql': `http://localhost:${GRAPHQL_PORT}` },
+    proxy: { '/graphql': { target: `http://localhost:${GRAPHQL_PORT}` } },
     publicPath: '/js/',
     stats: { colors: true },
   });
@@ -65,9 +72,7 @@ function startGraphQLServer(callback) {
     schema: Schema,
   }));
   graphQLServer = graphQLApp.listen(GRAPHQL_PORT, () => {
-    console.log(
-      `GraphQL server is now running on http://localhost:${GRAPHQL_PORT}`
-    );
+    console.log(`GraphQL server is now running on http://localhost:${GRAPHQL_PORT}`);
     if (callback) {
       callback();
     }
@@ -103,9 +108,9 @@ function startServers(callback) {
         callback();
       }
     }
+    openDatabaseConnection();
     startGraphQLServer(handleTaskDone);
     startAppServer(handleTaskDone);
-    openDatabaseConnection();
   });
 }
 const watcher = chokidar.watch('./data/{database,schema}.js');

@@ -15,7 +15,11 @@ const UserType = new GraphQLObjectType({
   fields: () => ({
     userInfo: {
       type: UserInfoType,
-      resolve: () => getUserInfo(),
+      resolve: () => {
+        const ui = getUserInfo();
+        console.log('USER INFO', ui);
+        return ui;
+      },
     },
     signUpInfo: {
       type: SignUpInfoType,

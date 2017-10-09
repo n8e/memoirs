@@ -1,11 +1,11 @@
+import mongoose from 'mongoose';
+import User from '../data/remote/models/users';
+import Role from '../data/remote/models/roles';
+
 const env = process.env.NODE_ENV || 'development';
 if (env === 'development') {
   require('dotenv').load();
 }
-
-import User from '../data/remote/models/users';
-import Role from '../data/remote/models/roles';
-import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
 
@@ -16,35 +16,35 @@ const admin = new User({
   password: 'Abc123!',
   name: 'Nate Martin',
   email: 'godmetweenciati@gmail.com',
-  role: 1
+  role: 1,
 });
 
 const roleAdmin = new Role({
   id: 1,
-  title: 'Administrator'
+  title: 'Administrator',
 });
 
 const roleUser = new Role({
   id: 2,
-  title: 'User'
+  title: 'User',
 });
 
 const exit = () => {
   setTimeout(() => {
     process.exit(0);
   }, 1000);
-}
+};
 
 const rolesAdminSeed = () => {
   roleAdmin.save(() => {
     console.log('Seeded role Administrator');
     return;
   })
-  .catch(err => {
+  .catch((err) => {
     console.log(err);
     return;
   });
-}
+};
 
 // seed role 2 for User
 const rolesUserSeed = () => {
@@ -52,11 +52,11 @@ const rolesUserSeed = () => {
     console.log('Seeded role User');
     return;
   })
-  .catch(err => {
+  .catch((err) => {
     console.log(err);
     return;
   });
-}
+};
 
 // seed sample admin
 const adminSeed = () => {
@@ -71,14 +71,14 @@ const adminSeed = () => {
       console.log('Seeded admin Nate');
       return;
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return;
     });
   }).catch((err) => {
     return err;
   });
-}
+};
 
 const seeder = () => {
   mongoose.connect(config.database, (err) => {
@@ -89,9 +89,9 @@ const seeder = () => {
 
       let promise = mongoose.connection.db.dropDatabase();
       promise.then(() => {
-         return rolesAdminSeed();
+        return rolesAdminSeed();
       }).then(() => {
-         return rolesUserSeed();
+        return rolesUserSeed();
       }).then(() => {
         return adminSeed();
       }).catch((err) => {
@@ -101,5 +101,5 @@ const seeder = () => {
       exit();
     }
   });
-}
+};
 seeder();

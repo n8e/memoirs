@@ -1,20 +1,23 @@
+import global from 'global';
+
 export function storeLoginObj(loginObj) {
-  localStorage.setItem('loggedIn', loginObj.loggedIn);
-  localStorage.setItem('userName', loginObj.userName);
-  return localStorage.setItem('token', loginObj.token);
+  global.loggedIn = loginObj.loggedIn;
+  global.userName = loginObj.userName;
+  global.token = loginObj.token;
+  return global;
 }
 
 export function clearLoginObj() {
-  localStorage.removeItem('loggedIn');
-	localStorage.removeItem('userName');
-  return localStorage.removeItem('token');
+  global.loggedIn = false;
+  global.userName = '';
+  global.token = '';
+  return {};
 }
 
 export function getUserInfo() {
-  console.log('IN HERE');
   return {
-    loggedIn: localStorage.getItem('loggedIn'),
-    userName: localStorage.getItem('userName'),
-    token: localStorage.getItem('token')
-	};
+    loggedIn: global.loggedIn,
+    userName: global.userName,
+    token: global.token,
+  };
 }
